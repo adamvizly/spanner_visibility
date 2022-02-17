@@ -2,7 +2,7 @@ from map_creator import create_map, create_graph
 from spanner import primsAlgorithm
 
 
-the_map, starting_point, target_points, obstacle_points = create_map(6,5,3,4)
+the_map, starting_point, target_points, obstacle_points = create_map()
 
 print("targets: ", target_points)
 print("start: ", starting_point)

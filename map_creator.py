@@ -48,13 +48,15 @@ def create_graph(vertices, obstacle_points):
     for i in vertices:
         row = []
         for j in vertices:
-            for obstacle, h in obstacle_points.items():
-                if is_on_edge(i, j, obstacle):
-                    row.append(distance(i, j) + h)
-                else:
-                    row.append(distance(i, j))
+            row.append(distance(i, j))
         the_graph.append(row)
     
+    for obstacle, h in obstacle_points.items():
+        for i, p in enumerate(vertices):
+            for j, q in enumerate(vertices):
+                if is_on_edge(p, q, obstacle):
+                    the_graph[i][j] += h
+            
     return the_graph
 
 
