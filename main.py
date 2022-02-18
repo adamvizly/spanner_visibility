@@ -1,4 +1,4 @@
-from map_creator import create_map, create_graph
+from utils import create_map, create_graph, graph_cost, make_a_cycle
 from spanner import primsAlgorithm
 
 
@@ -23,3 +23,15 @@ the_mst = primsAlgorithm(the_graph, len(vertices))
 print("the MST: ")
 for row in the_mst:
     print(row)
+
+the_mst_cost = graph_cost(the_mst)
+
+the_cycle = make_a_cycle(the_graph, the_mst, len(vertices))
+print("the MST with a cycle: ")
+for row in the_cycle:
+    print(row)
+
+the_cycle_cost = graph_cost(the_cycle)
+
+print("MST cost: ", the_mst_cost)
+print("MST with cycle cost: ", the_cycle_cost)

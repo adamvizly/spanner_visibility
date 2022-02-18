@@ -55,7 +55,7 @@ def create_graph(vertices, obstacle_points):
         for i, p in enumerate(vertices):
             for j, q in enumerate(vertices):
                 if is_on_edge(p, q, obstacle):
-                    the_graph[i][j] += h
+                    the_graph[i][j] += h * 2
             
     return the_graph
 
@@ -80,3 +80,32 @@ def distance(start, end):
     start_x, start_y = start[0], start[1]
     end_x, end_y = end[0], end[1]
     return round(math.sqrt(((start_x - end_x) ** 2) + ((start_y - end_y) ** 2)), 2)
+
+
+def graph_cost(the_graph):
+    cost = 0
+    for row in the_graph:
+        for weight in row:
+            cost += weight
+    return cost / 2
+
+
+def min_in_graph(the_graph, number_of_vertices):
+    minimum = 99999
+    x, y = -1, -1
+    for i in range(number_of_vertices):
+        for j in range(number_of_vertices):
+            if the_graph[i][j] > 0 and the_graph[i][j] < minimum:
+                minimum = the_graph[i][j]
+                x, y = i, j
+    return x, y, minimum
+
+
+def make_a_cycle(the_graph, the_mst, number_of_vertices):
+    sub_graph = [[0 for column in range(number_of_vertices)] for row in range(number_of_vertices)]
+    for i in range(number_of_vertices):
+        for j in range(number_of_vertices):
+            sub_graph[i][j] = the_graph[i][j] - the_mst[i][j]
+    x, y, next_min = min_in_graph(sub_graph, number_of_vertices)
+    the_mst[x][y] = the_mst[y][x] = next_min
+    return the_mst
